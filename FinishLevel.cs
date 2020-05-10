@@ -25,7 +25,6 @@ public class FinishLevel : MonoBehaviour
         Debug.Log(gameObject.transform.position);
         if (transform.position.x > 144)
         {
-            Debug.Log('a');
             StartCoroutine(LoadLevel());
         }
     }
