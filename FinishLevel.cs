@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,6 +16,16 @@ public class FinishLevel : MonoBehaviour
     {
         if (collision.tag == "EndLevel")
         {
+            StartCoroutine(LoadLevel());
+        }
+    }
+
+    private void Update()
+    {
+        Debug.Log(gameObject.transform.position);
+        if (transform.position.x > 144)
+        {
+            Debug.Log('a');
             StartCoroutine(LoadLevel());
         }
     }
