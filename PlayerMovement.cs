@@ -6,23 +6,16 @@ public class PlayerMovement : MonoBehaviour
 {
     public CharacterController2D controller;
     public Animator animator;
-    GroundCheck myGround;
 
     public float runSpeed = 40f;
 
     float horizontalMove = 0f;
 
-    bool jump = true;
-    bool doubleJump = true;
+    bool jump = false;
 
-    private void Start()
-    {
-        myGround = this.GetComponentInChildren<GroundCheck>();
-    }
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(jump);
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
         animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
@@ -36,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnLanding()
     {
-        animator.SetBool("IsJumping", false); 
+        animator.SetBool("IsJumping", false);
     }
 
     void FixedUpdate()
@@ -44,5 +37,17 @@ public class PlayerMovement : MonoBehaviour
         //Move our caracter
         controller.Move(horizontalMove * Time.fixedDeltaTime, false, jump);
         jump = false;
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.name.Equals("MovingPlatform"))
+            this.transform.parent = col.transform;
+    }
+
+    void OnCollisionExit2D(Collision2D col)
+    {
+        if (col.gameObject.name.Equals("MovingPlatform"))
+            this.transform.parent = null;
     }
 }
