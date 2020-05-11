@@ -12,22 +12,14 @@ public class FinishLevel : MonoBehaviour
         index = SceneManager.GetActiveScene().buildIndex + 1;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.tag == "EndLevel")
+        if (collision.collider.name == "End")
         {
             StartCoroutine(LoadLevel());
         }
     }
-
-    private void Update()
-    {
-        Debug.Log(gameObject.transform.position);
-        if (transform.position.x > 144)
-        {
-            StartCoroutine(LoadLevel());
-        }
-    }
+   
 
     IEnumerator LoadLevel()
     {
