@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
@@ -18,6 +18,7 @@ public class deadPlayer : MonoBehaviour
 
         if (dead)
         {
+            dead = false;
             animator.SetBool("IsDead", true);
             StartCoroutine(RestartLevel());
         }
@@ -26,10 +27,8 @@ public class deadPlayer : MonoBehaviour
     IEnumerator RestartLevel()
     {
         yield return new WaitForSeconds(1);
-        animator.SetBool("IsDead", false);
-        dead = false;
-        yield return new WaitForSeconds(1);
         transform.position = SpawnPoint.position;
+        animator.SetBool("IsDead", false);
     }
 
 }
