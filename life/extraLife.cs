@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class extraLife : MonoBehaviour
 {
+
+    public bool hasTouched = false;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (hasTouched == false)
         {
-            health.Health += 1;
-            Destroy(gameObject);
+            if (other.gameObject.CompareTag("Player"))
+            {
+                health.Health += 1;
+                Destroy(gameObject);
+                hasTouched = true;
+            }
         }
+
     }
 }
