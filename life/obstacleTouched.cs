@@ -4,13 +4,26 @@ using UnityEngine;
 
 public class obstacleTouched : MonoBehaviour
 {
-  
+    public bool sentInfo;
+
+    // variabila folosita pentru ca player-ul sa moara o singura data
+    public static bool hasDied = false;
+
+
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.transform.CompareTag("Player"))
+        // daca player-ul n-a murit
+        if (!hasDied)
         {
-            health.Health -= 1;
-            deadPlayer.dead = true;
+            // daca am lovit player-ul
+            if (col.transform.CompareTag("Player"))
+            {
+                // scadem numarul de vieti si activam animatia de hit/lose/die
+                health.Health -= 1;
+                deadPlayer.dead = true;
+                hasDied = true;
+            }
         }
+
     }
 }
