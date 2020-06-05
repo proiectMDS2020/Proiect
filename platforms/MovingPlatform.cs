@@ -34,7 +34,7 @@ public class MovingPlatform  : MonoBehaviour
 
     void Update()
     {
-        Move();
+        Move();//functie utilizata pentru a misca placuta
 
     }
 
