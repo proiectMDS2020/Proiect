@@ -1,23 +1,24 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public GameObject player;
+    // acest script face camera sa urmareasca jucatorul 
+
+    public GameObject player; // referinta la obiectul jucator
     private Vector3 offset;
-    // Start is called before the first frame update
+
     void Start()
     {
-        offset = transform.position - player.transform.position;
+        offset = transform.position - player.transform.position; // distanta initiala dintre camera si jucator
     }
 
-    // Update is called once per frame
     void LateUpdate()
     {
-        var tempCamera = transform.position;
-        var tempPlayer = player.transform.position;
-        tempCamera.x = tempPlayer.x + offset.x;
-        transform.position = tempCamera;
+        var tempCamera = transform.position; // variabila auxiliara pentru pozitia camerei
+        var tempPlayer = player.transform.position; // variabila auxiliara pentru pozitia jucatorului
+        tempCamera.x = tempPlayer.x + offset.x; // se actualizeaza in variabila auxiliara valoare pe axa Ox conform miscarii jucatorului
+        transform.position = tempCamera; 
     }
 }
