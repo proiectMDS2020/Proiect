@@ -8,9 +8,6 @@ public class health : MonoBehaviour
     // numarul de vieti ale jucatorului (minim 0, maxim 5) 
     public static int Health;
 
-    // vector de animators, punul pentru fiecare inima din health bar
-    public Animator[] animator;
-
     // vector pentru inimi propriu-zise
     public GameObject[] hearts;
 
