@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -9,9 +9,11 @@ public class deadEnemies : MonoBehaviour
 {
     // variabila folosita pentru activarea/dezactivarea animatiei de hit
     public bool IsDead;
-
+    
     // variabila folosita pentru ca player-ul sa moara o singura data
     public static bool hasDied = false;
+
+    public bool died = false;
 
     public Animator animator;
 
@@ -26,6 +28,7 @@ public class deadEnemies : MonoBehaviour
             if (player.transform.position.y - transform.position.y >= 1)
             {
                 animator.SetBool("IsDead", true);
+                died = true;
 
                 // distrugem obiectul
                 StartCoroutine(Destroy());
@@ -33,7 +36,7 @@ public class deadEnemies : MonoBehaviour
             else
             {
                 // altfel, moare player-ul
-                if (!hasDied)
+                if (!hasDied && !died)
                 {
                     // scadem numarul de vieti
                     health.Health -= 1;
@@ -42,9 +45,9 @@ public class deadEnemies : MonoBehaviour
                     deadPlayer.dead = true;
                     hasDied = true;
                 }
-
+                
             }
-
+               
         }
     }
 
@@ -54,5 +57,5 @@ public class deadEnemies : MonoBehaviour
         Destroy(gameObject);
 
     }
-
+    
 }
