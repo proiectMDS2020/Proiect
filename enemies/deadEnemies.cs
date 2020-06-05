@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class deadEnemie : MonoBehaviour
+public class deadEnemies : MonoBehaviour
 {
     // variabila folosita pentru activarea/dezactivarea animatiei de hit
     public bool IsDead;
@@ -21,8 +21,8 @@ public class deadEnemie : MonoBehaviour
         if (player.collider.name == "Player")
         {
             // daca distanta dintre pozitia pe axa oY a pleyer-ului si 
-            // a inamicului este >= cu inaltimea player-ului (in cazul nostru 1.5) -> am omorat inamicul
-            if (player.transform.position.y - transform.position.y >= 1.5)
+            // a inamicului este >= jumatate din inaltimea player-ului (in cazul nostru 1.5 / 2) -> am omorat inamicul
+            if (player.transform.position.y - transform.position.y >= 0.75)
             {
                 animator.SetBool("IsDead", true);
 
