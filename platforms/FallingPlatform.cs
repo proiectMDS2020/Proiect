@@ -45,7 +45,7 @@ public class FallingPlatform : MonoBehaviour
     {
         //placa asteapta numarul de secunde reprezentat de variabila "fallDelay"
          yield return new WaitForSeconds(fallDelay);
-         disabled = true; //seteaza obiectul ca fiind inactiv
+         disabled = true; //seteaza obiectul ca fiind inactiv, facand variabila disabled true;
          yield return 0;
     }
 
