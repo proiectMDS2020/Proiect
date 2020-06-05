@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,9 +17,6 @@ public class health : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // daca pui mai intai scena de lose, apoi de win (win e ultima), pune mai jos -1 
-        // index = SceneManager.sceneCount();
-
         // setam valoarea initiala la 3
         Health = 3;
 
@@ -41,7 +38,7 @@ public class health : MonoBehaviour
         }
 
         // meniu de switch pentru fiecare caz (de la 5 la 0 inimi/vieti)
-        switch (Health)
+        switch(Health)
         {
             case 5:
                 hearts[0].gameObject.SetActive(true);
@@ -87,19 +84,8 @@ public class health : MonoBehaviour
 
                 // avem 0 vieti/inimi
                 // dam play la scena de lose
-                //StartCoroutine(LoadLevel());
+                SceneManager.LoadScene(12); 
                 break;
         }
     }
-
-    // functie pentru trimiterea catre scena de lose
-    /*
-    IEnumerator LoadLevel()
-    {
-        yield return new WaitForSeconds(2);
-        completeLevelUI.SetActive(true);
-        yield return new WaitForSeconds(2);
-        SceneManager.LoadScene(index);
-    }
-    */
 }
