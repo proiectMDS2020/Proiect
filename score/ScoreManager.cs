@@ -28,6 +28,6 @@ public class ScoreManager : MonoBehaviour
         //Se aduna la scorul curent valoarea primita ca parametru
         score += CoinValue;
         //Se afiseaza scorul actualizat
-        text.GetComponent<Text>().text = "Score: " + score.ToString();
+        text.GetComponent<Text>().text = "SCORE: " + score.ToString();
     }
 }
