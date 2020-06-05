@@ -21,8 +21,9 @@ public class deadEnemies : MonoBehaviour
         if (player.collider.name == "Player")
         {
             // daca distanta dintre pozitia pe axa oY a pleyer-ului si 
-            // a inamicului este >= jumatate din inaltimea player-ului (in cazul nostru 1.5 / 2) -> am omorat inamicul
-            if (player.transform.position.y - transform.position.y >= 0.75)
+            // a inamicului este >= inaltimea player-ului -> am omorat inamicul
+            // in cazul nostru am luat o marja de eroare de 0.5 (daca atinge inamicul cat timp acesta isi face animatia de lose sa nu moara)
+            if (player.transform.position.y - transform.position.y >= 1)
             {
                 animator.SetBool("IsDead", true);
 
