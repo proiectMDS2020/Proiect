@@ -23,7 +23,7 @@ public class fallingScript : MonoBehaviour
                 // scad numarul de vieti si repozitionez personajul la inceput
                 health.Health -= 1;
                 hasDied = true;
-                col.transform.position = spawn.transform.position;
+                deadPlayer.dead = true;
             }
         }
     }
