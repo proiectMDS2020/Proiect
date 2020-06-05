@@ -3,34 +3,28 @@ using UnityEngine.Events;
 
 public class CharacterController2D : MonoBehaviour
 {
-	[SerializeField] private float m_JumpForce = 400f;                          // Amount of force added when the player jumps.
-	[SerializeField] private float m_DoubleJumpForce = 250f;                          // Amount of force added when the player double jumps.
-	[Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;          // Amount of maxSpeed applied to crouching movement. 1 = 100%
-	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;  // How much to smooth out the movement
-	[SerializeField] private bool m_AirControl = false;                         // Whether or not a player can steer while jumping;
-	[SerializeField] private LayerMask m_WhatIsGround;                          // A mask determining what is ground to the character
-	[SerializeField] private Transform m_GroundCheck;                           // A position marking where to check if the player is grounded.
-	[SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
-	[SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider that will be disabled when crouching
+	[SerializeField] private float m_JumpForce = 400f;                          // forta adaugata cand jucatorul sare
+	[SerializeField] private float m_DoubleJumpForce = 250f;                    // forta adaugata cand jucatorul face o saritura dubla
+	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;  // cat de continua sa arate miscarea
+	[SerializeField] private bool m_AirControl = false;                         // jucatorul poate sau nu sa controleze miscarea cat este in aer
+	[SerializeField] private LayerMask m_WhatIsGround;                          // detecteaza ce este "ground"
+	[SerializeField] private Transform m_GroundCheck;                           // o pozitie ce marcheaza unde sa se verifice daca jucatorul este pe pamant
+	[SerializeField] private Transform m_CeilingCheck;                          // o pozitie ce marcheaza unde sa se verifice pentru "tavan"
 
-	const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
-	private bool m_Grounded;            // Whether or not the player is grounded.
-	const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
+	const float k_GroundedRadius = .2f; // ajuta sa se determine daca jucatorul este pe pamant
+	private bool m_Grounded;            // jucatorul este sau nu pe pamant
 	private Rigidbody2D m_Rigidbody2D;
-	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+	private bool m_FacingRight = true;  // pentru a determina in ce directie se uita jucatorul (stanga/dreapta)
 	private Vector3 m_Velocity = Vector3.zero;
-	bool doubleJump = true;
+	bool doubleJump = true; // variabila ce va permire saritura dubla cand este = true
 
 	[Header("Events")]
 	[Space]
 
-	public UnityEvent OnLandEvent;
+	public UnityEvent OnLandEvent; // eveniment ce este activat cand jucatorul aterizeaza
 
 	[System.Serializable]
 	public class BoolEvent : UnityEvent<bool> { }
-
-	public BoolEvent OnCrouchEvent;
-	private bool m_wasCrouching = false;
 
 	private void Awake()
 	{
@@ -39,8 +33,6 @@ public class CharacterController2D : MonoBehaviour
 		if (OnLandEvent == null)
 			OnLandEvent = new UnityEvent();
 
-		if (OnCrouchEvent == null)
-			OnCrouchEvent = new BoolEvent();
 	}
 
 	private void FixedUpdate()
@@ -48,97 +40,62 @@ public class CharacterController2D : MonoBehaviour
 		bool wasGrounded = m_Grounded;
 		m_Grounded = false;
 
-		// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
-		// This can be done using layers instead but Sample Assets will not overwrite your project settings.
+		// jucatorul este pe pamant daca orice punct din collider-ul pentru ground check (care este rotund) atinge orice obiect care a fost desemnat drept pamant
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
 		for (int i = 0; i < colliders.Length; i++)
 		{
 			if (colliders[i].gameObject != gameObject)
 			{
 				m_Grounded = true;
+				// daca nu este pe pamant se invoca evenimentul de aterizare
 				if (!wasGrounded)
 					OnLandEvent.Invoke();
 			}
 		}
 	}
 
-	public void Move(float move, bool crouch, bool jump)
+	public void Move(float move, bool jump)
 	{
-		// If crouching, check to see if the character can stand up
-		if (!crouch)
-		{
-			// If the character has a ceiling preventing them from standing up, keep them crouching
-			if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
-			{
-				crouch = true;
-			}
-		}
 
-		//only control the player if grounded or airControl is turned on
+		// controleaza jucatorul doar daca este pe pamant sau variabila airControl este true
 		if (m_Grounded || m_AirControl)
 		{
 
-			// If crouching
-			if (crouch)
-			{
-				if (!m_wasCrouching)
-				{
-					m_wasCrouching = true;
-					OnCrouchEvent.Invoke(true);
-				}
-
-				// Reduce the speed by the crouchSpeed multiplier
-				move *= m_CrouchSpeed;
-
-				// Disable one of the colliders when crouching
-				if (m_CrouchDisableCollider != null)
-					m_CrouchDisableCollider.enabled = false;
-			}
-			else
-			{
-				// Enable the collider when not crouching
-				if (m_CrouchDisableCollider != null)
-					m_CrouchDisableCollider.enabled = true;
-
-				if (m_wasCrouching)
-				{
-					m_wasCrouching = false;
-					OnCrouchEvent.Invoke(false);
-				}
-			}
-
-			// Move the character by finding the target velocity
+			// misca jucatorul in directia si viteza indicata de move
 			Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
-			// And then smoothing it out and applying it to the character
+			// Face miscarea mai lina si aplica aceasta modificare jucatorului
 			m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
 
-			// If the input is moving the player right and the player is facing left...
+			// daca variabila move indica deplasarea spre dreapta, iar personajul se uita catre stanga
 			if (move > 0 && !m_FacingRight)
 			{
-				// ... flip the player.
+				// schimba orientarea personajului catre dreapta
 				Flip();
 			}
-			// Otherwise if the input is moving the player left and the player is facing right...
+			// daca variabila move indica deplasarea spre stanga, iar personajul se uita catre dreapta
 			else if (move < 0 && m_FacingRight)
 			{
-				// ... flip the player.
+				// schimba orientarea personajului catre stanga
 				Flip();
 			}
 		}
 
+		// daca jucatorul nu este pe pamant, dar doreste sa sara se va verifica daca doubleJump = true si va executa sau nu saritura dubla
 		if(!m_Grounded && jump && doubleJump)
 		{
+			// dupa ce s-a efectuat saritura dubla aceasta se reseteaza la false pentru ca jucatorul sa nu poata efectua o saritura tripla etc...
 			doubleJump = false;
 			m_Rigidbody2D.AddForce(new Vector2(0f, m_DoubleJumpForce));
 
 		}
 
-		// If the player should jump...
+		// daca jucatorul doreste sa sara si este pe pamant
 		if (m_Grounded && jump)
 		{
-			// Add a vertical force to the player.
+			// adauga o forta verticala acestuia
 			m_Grounded = false;
 			m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+			// intrucat jucatorul era pe pamant, inseamna ca a efectuat o saritura simpla deci are dreptul la o saritura dubla
 			doubleJump = true;
 		}
 	}
@@ -146,10 +103,10 @@ public class CharacterController2D : MonoBehaviour
 
 	private void Flip()
 	{
-		// Switch the way the player is labelled as facing.
+		// declara directia in care este orientat jucatorul ca fiind opusa celei de pana acum
 		m_FacingRight = !m_FacingRight;
 
-		// Multiply the player's x local scale by -1.
+		// schimba efectiv orientarea jucatorului inmultind cu -1
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
