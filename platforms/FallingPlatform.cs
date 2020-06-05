@@ -26,8 +26,7 @@ public class FallingPlatform : MonoBehaviour
         else {
             gameObject.SetActive(true);
         }
-
-    }
+     }
 
     void OnCollisionEnter2D (Collision2D col)
     {
@@ -36,9 +35,6 @@ public class FallingPlatform : MonoBehaviour
         { 
            StartCoroutine(Fall());
         }
-
-
-
     }
     
     IEnumerator Fall()
@@ -48,6 +44,4 @@ public class FallingPlatform : MonoBehaviour
          disabled = true; //seteaza obiectul ca fiind inactiv, facand variabila disabled true;
          yield return 0;
     }
-
-  
 }
