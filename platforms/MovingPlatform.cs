@@ -42,10 +42,10 @@ public class MovingPlatform  : MonoBehaviour
     {
         objectTransform.localPosition = Vector3.MoveTowards(objectTransform.localPosition, nextPos, speed * Time.deltaTime); //muta placuta spre punctul indicat de nextPos cu viteza speed
         
-        //cand ajunge la o distanta mai mica sau egala cu 0,1 schimba pozitia spre care se indreapta
+        //cand placuta ajunge la o distanta mai mica sau egala cu 0,1 fata de pozitia spre care se indreapta
         if(Vector3.Distance(objectTransform.localPosition, nextPos) <= 0.1)
-        {
-            ChangeDestination();
+        {   
+            ChangeDestination();//schimbam pozitia spre care trebuie sa mearga placuta
         }
     }
 
