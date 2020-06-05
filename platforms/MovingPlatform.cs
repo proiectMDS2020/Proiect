@@ -6,33 +6,32 @@ using UnityEngine;
 public class MovingPlatform  : MonoBehaviour
 {
 
-    private Vector3 posA;
+    private Vector3 posA; //variabila utilizata pentru a salva pozitia initiala a placutei
 
-    private Vector3 posB;
+    private Vector3 posB; //variabila utilizata pentru a salva pozitia obiectului pana la care se misca placuta 
 
-    private Vector3 nextPos;
-
-    [SerializeField]
-    private float speed;
+    private Vector3 nextPos; //variabila utilizata pentru a indica spre ce punct trebuie sa mearga placuta 
 
     [SerializeField]
-    private Transform childTransform;
+    private float speed; //viteza cu care se va misca placuta
 
     [SerializeField]
-    private Transform transformB;
+    private Transform objectTransform; //placuta care se misca
+
+    [SerializeField]
+    private Transform transformB; //obiectul pana la care ajunge placuta
 
 
-    // Start is called before the first frame update
+
     void Start()
     {
-        posA = childTransform.localPosition;
-        posB = transformB.localPosition;
-        nextPos = posB;
+        posA = objectTransform.localPosition; // se salveaza pozitia initiala a placutei
+        posB = transformB.localPosition; //se salveaza pozitia obiectului pana la care se misca placuta 
+        nextPos = posB; //setam pozitia unde trebuie sa ajunga placuta 
 
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         Move();
@@ -41,9 +40,10 @@ public class MovingPlatform  : MonoBehaviour
 
     private void Move()
     {
-        childTransform.localPosition = Vector3.MoveTowards(childTransform.localPosition, nextPos, speed * Time.deltaTime);
-
-        if(Vector3.Distance(childTransform.localPosition, nextPos) <= 0.1)
+        objectTransform.localPosition = Vector3.MoveTowards(objectTransform.localPosition, nextPos, speed * Time.deltaTime); //muta placuta spre punctul indicat de nextPos cu viteza speed
+        
+        //cand ajunge la o distanta mai mica sau egala cu 0,1 schimba pozitia spre care se indreapta
+        if(Vector3.Distance(objectTransform.localPosition, nextPos) <= 0.1)
         {
             ChangeDestination();
         }
@@ -51,6 +51,7 @@ public class MovingPlatform  : MonoBehaviour
 
     private void ChangeDestination()
     {
+        //functie utilizata pentru a schimba pozitia
         nextPos = nextPos != posA ? posA : posB;
     }
 
