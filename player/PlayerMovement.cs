@@ -49,13 +49,13 @@ public class PlayerMovement : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         // daca jucatorul se afla pe o platforma miscatoare se va misca impreuna cu ea
-        if (col.gameObject.name.Equals("MovingPlatform"))
+        if (col.gameObject.tag.Equals("MovingPlatform"))
             this.transform.parent = col.transform;
     }
 
     void OnCollisionExit2D(Collision2D col)
     {
-        if (col.gameObject.name.Equals("MovingPlatform"))
+        if (col.gameObject.tag.Equals("MovingPlatform"))
             this.transform.parent = null;
     }
 }
