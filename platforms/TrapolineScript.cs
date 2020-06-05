@@ -46,7 +46,7 @@ public class TrapolineScript : MonoBehaviour
     }
 
     void Jump()
-    {   //aplicatie utilizata pentru a arunca in aer player-ul;
+    {   //functie utilizata pentru a arunca in aer player-ul;
         bouncer.GetComponent<Rigidbody2D>().velocity = velocity;
     }
 }
