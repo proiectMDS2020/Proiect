@@ -8,7 +8,7 @@ public class FallingPlatform : MonoBehaviour
 {
    Rigidbody2D rb2d;
 
-    public float destroyDelay; //timpul pana cand va fi distrusa placa
+    public float destroyDelay; //timpul in care va disparea placa
 
 
     void Start()
@@ -19,7 +19,7 @@ public class FallingPlatform : MonoBehaviour
     void OnCollisionEnter2D (Collision2D col)
     {
         if (col.gameObject.tag.Equals("Player"))
-        {//daca player-ul a ajuns pe lasa, va fi distrusa;
+        {//daca player-ul a ajuns pe placa, aceasta  va fi distrusa;
            
             Destroy(gameObject, destroyDelay);
         }
