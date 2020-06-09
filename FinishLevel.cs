@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,9 +6,13 @@ using UnityEngine.SceneManagement;
 public class FinishLevel : MonoBehaviour
 {
     // acest script "semnaleaza" cand jucatorul a terminat nivelul si poate trece mai departe
-
+    
+    private bool getExtra = false;
+    public bool tag;
     private int index; // numarul scenei care urmeaza sa fie incarcata
     public GameObject completeLevelUI; // referinta la canvasul ce va afisa mesajul "Level Finished"
+
+
     void Start()
     {
         index = SceneManager.GetActiveScene().buildIndex + 1;
@@ -16,10 +20,36 @@ public class FinishLevel : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // verifica daca a atins trofeul de la finalul nivelului
-        if (collision.collider.name == "End")
+        if (tag == false)
         {
-            StartCoroutine(LoadLevel());
+            // verifica daca a atins trofeul de la finalul nivelului
+            if (collision.collider.name == "End")
+            {
+                if (health.Health>3)
+                {  
+                    if (getExtra == false)
+                    {
+                        ScoreManager.instance.ExtraPoints();
+                        getExtra = true;
+                    }
+                }
+                StartCoroutine(LoadLevel());
+            }
+        }
+        else
+        {
+            if (collision.collider.tag == "End")
+            {
+                if (health.Health>3)
+                {
+                    if (getExtra == false)
+                    {
+                        ScoreManager.instance.ExtraPoints();
+                        getExtra = true;
+                    }
+                }
+                StartCoroutine(LoadLevel());
+            }
         }
     }
    
