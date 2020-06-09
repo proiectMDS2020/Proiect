@@ -14,6 +14,7 @@ public class WinLose : MonoBehaviour
     // reia jocul de la nivelul 1
     public void RestartGame()
     {
+        ScoreManager.score = 0;
         SceneManager.LoadScene(1);
     }
 }
