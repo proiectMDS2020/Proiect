@@ -10,15 +10,17 @@ public class ScoreManager : MonoBehaviour
     //Obiect pentru afisarea scorului in permanenta pe ecran
     public GameObject text;
     //Variabila care contorizeaza scorul
-    int score = 0;
+    public static int score = 0;
 
     // Start is called before the first frame update
     void Start()
-    {
-        if(instance==null)
+    {   
+        if (instance == null)
         {
             instance = this;
         }
+        text.GetComponent<Text>().text = "SCORE: " + score.ToString();
+        //DontDestroyOnLoad(gameObject);
     }
 
     //Functie care modifica valoarea scorului si afisarea lui
@@ -28,6 +30,12 @@ public class ScoreManager : MonoBehaviour
         //Se aduna la scorul curent valoarea primita ca parametru
         score += CoinValue;
         //Se afiseaza scorul actualizat
+        text.GetComponent<Text>().text = "SCORE: " + score.ToString();
+    }
+
+    public void ExtraPoints()
+    {
+        score += 50;
         text.GetComponent<Text>().text = "SCORE: " + score.ToString();
     }
 }
