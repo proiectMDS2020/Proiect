@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -36,7 +36,7 @@ public class health : MonoBehaviour
         }
 
         // meniu de switch pentru fiecare caz (de la 5 la 0 inimi/vieti)
-        switch(Health)
+        switch (Health)
         {
             case 5:
                 hearts[0].gameObject.SetActive(true);
@@ -82,8 +82,10 @@ public class health : MonoBehaviour
 
                 // avem 0 vieti/inimi
                 // dam play la scena de lose
-                SceneManager.LoadScene(12); 
+                obstacleTouched.hasDied = false; 
+                SceneManager.LoadScene(12);
                 break;
         }
     }
+   
 }
