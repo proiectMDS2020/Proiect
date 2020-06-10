@@ -56,7 +56,7 @@ public class FinishLevel : MonoBehaviour
     // incarca urmatoarea scena
     IEnumerator LoadLevel()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.5f);
         // activeaza canvasul
         completeLevelUI.SetActive(true);
         // il lasa sa ruleze doua secunde
