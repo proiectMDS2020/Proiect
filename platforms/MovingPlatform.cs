@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 
-public class MovingPlatform  : MonoBehaviour
+public class MovingPlatform : MonoBehaviour
 {
 
     private Vector3 posA; //variabila utilizata pentru a salva pozitia initiala a placutei
@@ -21,30 +21,25 @@ public class MovingPlatform  : MonoBehaviour
     [SerializeField]
     private Transform transformB; //obiectul pana la care ajunge placuta
 
-
-
     void Start()
     {
         posA = objectTransform.localPosition; // se salveaza pozitia initiala a placutei
         posB = transformB.localPosition; //se salveaza pozitia obiectului pana la care se misca placuta 
         nextPos = posB; //setam pozitia unde trebuie sa ajunga placuta 
-
-
     }
 
     void Update()
     {
         Move();//functie utilizata pentru a misca placuta
-
     }
 
     private void Move()
     {
         objectTransform.localPosition = Vector3.MoveTowards(objectTransform.localPosition, nextPos, speed * Time.deltaTime); //muta placuta spre punctul indicat de nextPos cu viteza speed
-        
+
         //cand placuta ajunge la o distanta mai mica sau egala cu 0,1 fata de pozitia spre care se indreapta
-        if(Vector3.Distance(objectTransform.localPosition, nextPos) <= 0.1)
-        {   
+        if (Vector3.Distance(objectTransform.localPosition, nextPos) <= 0.1)
+        {
             ChangeDestination();//schimbam pozitia spre care trebuie sa mearga placuta
         }
     }

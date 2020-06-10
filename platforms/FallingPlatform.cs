@@ -10,12 +10,11 @@ public class FallingPlatform : MonoBehaviour
 
     public float destroyDelay; //timpul in care va disparea placa
 
-
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
     }
-
+    
     void OnCollisionEnter2D (Collision2D col)
     {
         if (col.gameObject.tag.Equals("Player"))

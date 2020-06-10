@@ -17,8 +17,6 @@ public class TrampolineScript : MonoBehaviour
         anim = gameObject.GetComponent<Animator>();
     }
     
-
-
     void OnCollisionStay2D(Collision2D other)
     {
         //atunci cand player-ul se afla deasupra trambulinei, setam animatia true 
@@ -27,7 +25,6 @@ public class TrampolineScript : MonoBehaviour
             anim.SetBool("isStepped", true);
 
             bouncer = other.gameObject;//setam player-ul (obiectul care va fi aruncat)
-
         }
 
     }
@@ -36,7 +33,6 @@ public class TrampolineScript : MonoBehaviour
         //daca player-ul ajunge deasupra trambulinei, setam variabila onTop = true;
         onTop = true;
     }
-
 
     void OnTriggerExit2D()
     { 
