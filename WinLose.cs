@@ -8,6 +8,7 @@ public class WinLose : MonoBehaviour
     // se intoarce la meniul principal
     public void GoToMenu()
     {
+        ScoreManager.score = 0;
         SceneManager.LoadScene(0);
     }
 
