@@ -7,7 +7,7 @@ public class Zoom : MonoBehaviour
 {
     // acest script va face zoom (in scena in care sunt prezentate toate cele 5 nivele) pe scena care urmeaza
     private int index; // va indicata numarul de ordine al scenei care va fi incarcata 
-    Animator animator;
+    public Animator animator;
     public Transform panel;
     public RectTransform panelRectTransform;
 
